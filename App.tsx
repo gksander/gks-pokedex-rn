@@ -1,21 +1,28 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import * as React from "react";
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet, Text, View } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { PokeListView } from "./views/PokeList.view";
+import { ROUTES } from "./routes";
+import { PokeSearchView } from "./views/PokeSearch.view";
+import { TypeListView } from "./views/TypeList.view";
+import { HomeView } from "./views/Home.view";
 
-export default function App() {
+const AppStack = createStackNavigator();
+
+const App: React.FC = () => {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
+    <NavigationContainer>
       <StatusBar style="auto" />
-    </View>
+      <AppStack.Navigator>
+        <AppStack.Screen name={ROUTES.HOME} component={HomeView} />
+        <AppStack.Screen name={ROUTES.POKE_LIST} component={PokeListView} />
+        <AppStack.Screen name={ROUTES.POKE_SEARCH} component={PokeSearchView} />
+        <AppStack.Screen name={ROUTES.TYPE_LIST} component={TypeListView} />
+      </AppStack.Navigator>
+    </NavigationContainer>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
