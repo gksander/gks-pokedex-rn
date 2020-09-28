@@ -8,19 +8,30 @@ import { ROUTES } from "./routes";
 import { PokeSearchView } from "./views/PokeSearch.view";
 import { TypeListView } from "./views/TypeList.view";
 import { HomeView } from "./views/Home.view";
+import { PokeListContainer } from "./components/PokeListContainer";
+import { PokeDetailsView } from "./views/PokeDetails.view";
 
 const AppStack = createStackNavigator();
 
 const App: React.FC = () => {
   return (
     <NavigationContainer>
-      <StatusBar style="auto" />
-      <AppStack.Navigator>
-        <AppStack.Screen name={ROUTES.HOME} component={HomeView} />
-        <AppStack.Screen name={ROUTES.POKE_LIST} component={PokeListView} />
-        <AppStack.Screen name={ROUTES.POKE_SEARCH} component={PokeSearchView} />
-        <AppStack.Screen name={ROUTES.TYPE_LIST} component={TypeListView} />
-      </AppStack.Navigator>
+      <PokeListContainer>
+        <StatusBar style="auto" />
+        <AppStack.Navigator>
+          <AppStack.Screen name={ROUTES.HOME} component={HomeView} />
+          <AppStack.Screen name={ROUTES.POKE_LIST} component={PokeListView} />
+          <AppStack.Screen
+            name={ROUTES.POKE_SEARCH}
+            component={PokeSearchView}
+          />
+          <AppStack.Screen
+            name={ROUTES.POKE_DETAILS}
+            component={PokeDetailsView}
+          />
+          <AppStack.Screen name={ROUTES.TYPE_LIST} component={TypeListView} />
+        </AppStack.Navigator>
+      </PokeListContainer>
     </NavigationContainer>
   );
 };
