@@ -16,7 +16,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { spacing } from "../appStyles";
 
-const { width } = Dimensions.get("window");
+const { width, height } = Dimensions.get("window");
 
 /**
  * Detail slider view
@@ -37,6 +37,7 @@ export const PokeDetailsView: React.FC = () => {
   const route = useRoute();
   const pokemonId = (route?.params as any)?.["id"];
 
+  // Effect to go to specific index if navigated in with pokemon ID
   React.useEffect(() => {
     const theIndex = list.findIndex((poke) => poke.id === pokemonId);
     if (theIndex > -1) {
@@ -49,14 +50,16 @@ export const PokeDetailsView: React.FC = () => {
   if (status === "loading") return <ActivityIndicator />;
 
   return (
-    <View style={{ backgroundColor: "lightblue", flex: 1 }}>
-      <SafeAreaView>
-        <View style={{ padding: spacing.base }}>
+    <View style={{ flex: 1 }}>
+      {/* Header */}
+      <SafeAreaView style={{ backgroundColor: "transparent" }}>
+        <View style={{ padding: spacing.base, backgroundColor: "transparent" }}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <Text>Go Back</Text>
           </TouchableOpacity>
         </View>
       </SafeAreaView>
+
       <Animated.FlatList
         ref={flatlistRef}
         data={list}
@@ -78,6 +81,9 @@ export const PokeDetailsView: React.FC = () => {
         renderItem={({ item, index }) => (
           <PokeItem pokemon={item} scrollX={scrollX} itemIndex={index} />
         )}
+        onEndReached={() =>
+          canFetchMore && !isFetchingMore ? fetchMore() : null
+        }
       />
     </View>
   );
@@ -110,16 +116,42 @@ const PokeItem: React.FC<{
     ],
     outputRange: [0, 1, 0],
   });
+  const backgroundColor = React.useMemo(() => {
+    const [r, g, b] = pokemon?.species?.colorPalette?.LightVibrant?.rgb || [
+      255,
+      255,
+      255,
+    ];
+    return `rgb(${r}, ${g}, ${b})`;
+  }, [pokemon]);
+  const backgroundOpacity = scrollX.interpolate({
+    inputRange,
+    outputRange: [0.2, 1, 0.2],
+  });
+  const backgroundTranslateY = scrollX.interpolate({
+    inputRange,
+    outputRange: [height / 2, 0, height / 2],
+  });
 
   return (
-    <View style={{ width }}>
+    <View style={{ width, height: "100%" }}>
+      <Animated.View
+        style={[
+          StyleSheet.absoluteFill,
+          {
+            backgroundColor,
+            opacity: backgroundOpacity,
+            transform: [{ translateY: backgroundTranslateY }],
+          },
+        ]}
+      />
       <View style={{ alignItems: "center" }}>
         <Animated.Image
           source={{ uri: `${IMG_BASE_URL}/${pokemon.id}.png` }}
           style={[
             styles.imageStyle,
             {
-              opacity,
+              // opacity,
               transform: [{ scale }],
             },
           ]}
