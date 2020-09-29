@@ -40,6 +40,7 @@ export const PokeListContainer: React.FC = ({ children }) => {
 
         return currentPage >= totalPages ? false : currentPage + 1;
       },
+      cacheTime: Infinity,
     },
   );
 

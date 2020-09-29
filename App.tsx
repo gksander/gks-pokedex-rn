@@ -10,6 +10,7 @@ import { TypeListView } from "./views/TypeList.view";
 import { PokeListContainer } from "./components/PokeListContainer";
 import { PokeDetailsView } from "./views/PokeDetails.view";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { TypeDetailView } from "./views/TypeDetail.view";
 
 const AppNavigator = createStackNavigator();
 
@@ -30,6 +31,10 @@ const App: React.FC = () => {
           <AppNavigator.Screen
             name={ROUTES.POKE_DETAILS}
             component={PokeDetailsView}
+          />
+          <AppNavigator.Screen
+            name={ROUTES.TYPE_DETAIL}
+            component={TypeDetailView}
           />
         </AppNavigator.Navigator>
       </PokeListContainer>
