@@ -14,6 +14,7 @@ import { ROUTES } from "../routes";
 import { colors, spacing } from "../appStyles";
 import { TypeChip } from "./TypeChip";
 import { Spacer } from "./Spacer";
+import { Pokeball } from "./Pokeball";
 
 const IMAGE_SHIFT = 30;
 
@@ -23,9 +24,10 @@ type PokeListCardProps = {
 
 export const PokeListCard: React.FC<PokeListCardProps> = ({ pokemon }) => {
   const navigation = useNavigation();
+  // Border color
   const [r, g, b] = pokemon?.species?.colorPalette?.DarkVibrant?.rgb ||
     pokemon?.species?.colorPalette?.LightMuted?.rgb || [255, 255, 255];
-  const color = `rgb(${r}, ${g}, ${b})`;
+  const color = `rgb(${Math.round(r)}, ${Math.round(g)}, ${Math.round(r)})`;
 
   return (
     <TouchableOpacity
@@ -61,16 +63,17 @@ export const PokeListCard: React.FC<PokeListCardProps> = ({ pokemon }) => {
           },
         ]}
       >
-        <Image
-          source={require("../assets/pokeball.png")}
+        <View
           style={{
             width: 150,
             height: 150,
             position: "absolute",
-            bottom: -40,
+            bottom: -45,
             right: -30,
           }}
-        />
+        >
+          <Pokeball fill={color} opacity={0.2} />
+        </View>
       </View>
       <View>
         <Text style={{ fontWeight: "bold", color: colors.black }}>
