@@ -1,8 +1,8 @@
 export const ROUTES = {
-  HOME: "HOME",
+  HOME: "Pokedex",
   POKE_LIST: "POKE_LIST",
   POKE_DETAILS: "POKE_DETAILS",
-  POKE_SEARCH: "POKE_SEARCH",
-  TYPE_LIST: "TYPE_LIST",
+  POKE_SEARCH: "Search",
+  TYPE_LIST: "Types",
   TYPE_DETAIL: "TYPE_DETAIL",
 };

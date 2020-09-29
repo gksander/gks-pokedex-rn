@@ -3,6 +3,7 @@ import {
   ActivityIndicator,
   Dimensions,
   FlatList,
+  SafeAreaView,
   Text,
   View,
 } from "react-native";
@@ -25,23 +26,23 @@ export const PokeListView: React.FC = () => {
   if (status === "error") return <Text>Something went wrong</Text>;
 
   return (
-    <FlatList
-      data={list}
-      renderItem={({ item }) => (
-        <View style={{ flex: 1 / 2, maxWidth: CardWidth }}>
+    <SafeAreaView style={{ backgroundColor: "white" }}>
+      <FlatList
+        data={list}
+        renderItem={({ item }) => (
           <PokeListCard key={item.name} pokemon={item} />
-        </View>
-      )}
-      contentContainerStyle={{ padding: spacing.base }}
-      onEndReached={() => {
-        if (!isFetchingMore && canFetchMore) fetchMore();
-      }}
-      numColumns={2}
-      columnWrapperStyle={{
-        flexDirection: "row",
-        justifyContent: "space-between",
-      }}
-      ItemSeparatorComponent={() => <View style={{ height: spacing.base }} />}
-    />
+        )}
+        contentContainerStyle={{
+          padding: spacing.base,
+          paddingTop: 2 * spacing.base,
+        }}
+        onEndReached={() => {
+          if (!isFetchingMore && canFetchMore) fetchMore();
+        }}
+        ItemSeparatorComponent={() => (
+          <View style={{ height: 2 * spacing.base }} />
+        )}
+      />
+    </SafeAreaView>
   );
 };
