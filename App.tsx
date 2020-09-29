@@ -18,7 +18,7 @@ const App: React.FC = () => {
     <NavigationContainer>
       <PokeListContainer>
         <StatusBar style="auto" />
-        <AppStack.Navigator>
+        <AppStack.Navigator screenOptions={{ headerShown: false }}>
           <AppStack.Screen name={ROUTES.HOME} component={HomeView} />
           <AppStack.Screen name={ROUTES.POKE_LIST} component={PokeListView} />
           <AppStack.Screen

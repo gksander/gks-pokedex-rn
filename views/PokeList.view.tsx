@@ -1,8 +1,20 @@
 import * as React from "react";
-import { ActivityIndicator, FlatList, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  Dimensions,
+  FlatList,
+  Text,
+  View,
+} from "react-native";
 import { PokeListCard } from "../components/PokeListCard";
 import { PokeListContext } from "../components/PokeListContainer";
+import { spacing } from "../appStyles";
 
+const CardWidth = (Dimensions.get("window").width - 3 * spacing.base) / 2;
+
+/**
+ * Pokemon list
+ */
 export const PokeListView: React.FC = () => {
   const {
     list,
@@ -15,12 +27,21 @@ export const PokeListView: React.FC = () => {
   return (
     <FlatList
       data={list}
-      renderItem={({ item }) => <PokeListCard key={item.name} pokemon={item} />}
-      contentContainerStyle={{ padding: 16 }}
-      ItemSeparatorComponent={() => <View style={{ height: 8 }} />}
+      renderItem={({ item }) => (
+        <View style={{ flex: 1 / 2, maxWidth: CardWidth }}>
+          <PokeListCard key={item.name} pokemon={item} />
+        </View>
+      )}
+      contentContainerStyle={{ padding: spacing.base }}
       onEndReached={() => {
         if (!isFetchingMore && canFetchMore) fetchMore();
       }}
+      numColumns={2}
+      columnWrapperStyle={{
+        flexDirection: "row",
+        justifyContent: "space-between",
+      }}
+      ItemSeparatorComponent={() => <View style={{ height: spacing.base }} />}
     />
   );
 };
