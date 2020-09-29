@@ -17,7 +17,12 @@ export const TypeChip: React.FC<TypeChipProps> = ({ type }) => {
         borderRadius: 3,
       }}
     >
-      <Text style={{ color: TypeColors[type.name]?.font || colors.black }}>
+      <Text
+        style={{
+          color: TypeColors[type.name]?.font || colors.black,
+          fontWeight: "600",
+        }}
+      >
         {type.name}
       </Text>
     </View>
