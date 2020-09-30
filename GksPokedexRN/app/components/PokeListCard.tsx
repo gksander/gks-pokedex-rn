@@ -21,11 +21,11 @@ import { useGetPokemonColor } from "../utils/useGetPokemonColor";
 import FastImage from "react-native-fast-image";
 
 const IMAGE_SHIFT = 30;
-// const AnimatedFastImage = Animated.createAnimatedComponent(FastImage);
 
 type PokeListCardProps = {
   pokemon: FetchPokeListDTO["data"]["allPokemon"]["edges"][0]["node"];
 };
+const AnimatedFastImage = Animated.createAnimatedComponent(FastImage);
 
 /**
  * Card for showing pokemon on list page
@@ -143,14 +143,14 @@ export const PokeListCard: React.FC<PokeListCardProps> = ({ pokemon }) => {
             ))}
           </View>
         </View>
-        <FastImage
+        <AnimatedFastImage
           source={{
             uri: `${IMG_BASE_URL}/${pokemon.id}.png`,
           }}
           style={{
             width: 100,
             height: 100,
-            // transform: [{ translateY: imageTranslateY }],
+            transform: [{ translateY: imageTranslateY }],
           }}
           resizeMode="contain"
         />

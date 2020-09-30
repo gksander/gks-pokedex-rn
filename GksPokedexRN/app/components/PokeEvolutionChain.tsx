@@ -1,13 +1,23 @@
 import * as React from "react";
-import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";import { EvChainSpecies, PokemonFromPokeList } from "../types";
+import {
+  Animated,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { EvChainSpecies, PokemonFromPokeList } from "../types";
 import { Spacer } from "./Spacer";
 import { spacing } from "../appStyles";
 import { IMG_BASE_URL } from "../config";
 import { Pokeball } from "./Pokeball";
 import { useGetPokemonColor } from "../utils/useGetPokemonColor";
+import FastImage from "react-native-fast-image";
 
 const IMAGE_SIZE = 75;
+const AnimatedFastImage = Animated.createAnimatedComponent(FastImage);
 
 export const PokeEvolutionChain: React.FC<{ pokemon: PokemonFromPokeList }> = ({
   pokemon,
@@ -79,15 +89,15 @@ export const PokeEvolutionChain: React.FC<{ pokemon: PokemonFromPokeList }> = ({
                       <Pokeball fill={color} opacity={0.4} />
                     </View>
                   )}
-                  <Image
+                  <AnimatedFastImage
                     source={{
                       uri: `${IMG_BASE_URL}/${species.pokemon.id}.png`,
                     }}
                     style={{
                       width: IMAGE_SIZE,
                       height: IMAGE_SIZE,
-                      resizeMode: "contain",
                     }}
+                    resizeMode="contain"
                   />
                 </View>
               ))}

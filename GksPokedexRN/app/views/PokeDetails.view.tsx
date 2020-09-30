@@ -5,14 +5,12 @@ import {
   Dimensions,
   FlatList,
   SafeAreaView,
-  ScrollView,
   StyleSheet,
   Text,
   View,
 } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { PokeListContext } from "../components/PokeListContainer";
-import { FetchPokeListDTO } from "../dto/FetchPokeList.dto";
 import { IMG_BASE_URL } from "../config";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -24,8 +22,10 @@ import { PokemonFromPokeList } from "../types";
 import { PokeStatChart } from "../components/PokeStatChart";
 import { useGetPokemonColor } from "../utils/useGetPokemonColor";
 import { PokeEvolutionChain } from "../components/PokeEvolutionChain";
+import FastImage from "react-native-fast-image";
 
 const { width, height } = Dimensions.get("window");
+const AnimatedFastImage = Animated.createAnimatedComponent(FastImage);
 
 /**
  * Detail slider view
@@ -187,7 +187,7 @@ const PokeItem: React.FC<{
             <Pokeball fill={color} opacity={0.2} />
           </Animated.View>
         </View>
-        <Animated.Image
+        <AnimatedFastImage
           source={{ uri: `${IMG_BASE_URL}/${pokemon.id}.png` }}
           style={[
             styles.imageStyle,
@@ -196,6 +196,7 @@ const PokeItem: React.FC<{
               transform: [{ scale }],
             },
           ]}
+          resizeMode="contain"
         />
       </View>
       <View style={{ padding: spacing.base, flex: 1 }}>
