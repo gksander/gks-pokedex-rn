@@ -62,8 +62,31 @@ export const PokeDetailsView: React.FC = () => {
       {/* Header */}
       <SafeAreaView style={{ backgroundColor: "transparent" }}>
         <View style={{ padding: spacing.base, backgroundColor: "transparent" }}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Text>Go Back</Text>
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            style={{ flexDirection: "row", alignItems: "center" }}
+            hitSlop={{
+              left: spacing.base,
+              right: spacing.base,
+              top: spacing.base,
+              bottom: spacing.base,
+            }}
+          >
+            <MaterialCommunityIcons
+              name="backburger"
+              size={1.2 * fontSizes.base}
+              color={colors.black}
+            />
+            <Spacer width={spacing.sm} />
+            <Text
+              style={{
+                fontSize: fontSizes.base,
+                color: colors.black,
+                fontWeight: "600",
+              }}
+            >
+              Go Back
+            </Text>
           </TouchableOpacity>
         </View>
       </SafeAreaView>
