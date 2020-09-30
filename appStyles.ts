@@ -9,7 +9,15 @@ export const spacing = {
 
 export const colors = {
   black: "rgba(50,50,50,1)",
+  gray: "rgb(130, 130, 130)",
   white: "white",
+};
+
+export const fontSizes = {
+  sm: 14,
+  base: 16,
+  lg: 24,
+  xl: 36,
 };
 
 // See: https://bulbapedia.bulbagarden.net/wiki/Category:Type_color_templates

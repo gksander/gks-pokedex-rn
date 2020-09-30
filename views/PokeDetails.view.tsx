@@ -5,16 +5,21 @@ import {
   Dimensions,
   FlatList,
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
   View,
 } from "react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { PokeListContext } from "../components/PokeListContainer";
 import { FetchPokeListDTO } from "../dto/FetchPokeList.dto";
 import { IMG_BASE_URL } from "../config";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { spacing } from "../appStyles";
+import { colors, fontSizes, spacing } from "../appStyles";
+import { Spacer } from "../components/Spacer";
+import { Pokeball } from "../components/Pokeball";
+import { TypeChip } from "../components/TypeChip";
 
 const { width, height } = Dimensions.get("window");
 
@@ -116,47 +121,133 @@ const PokeItem: React.FC<{
     ],
     outputRange: [0, 1, 0],
   });
-  const backgroundColor = React.useMemo(() => {
-    const [r, g, b] = pokemon?.species?.colorPalette?.LightVibrant?.rgb || [
-      255,
-      255,
-      255,
-    ];
-    return `rgb(${r}, ${g}, ${b})`;
-  }, [pokemon]);
-  const backgroundOpacity = scrollX.interpolate({
+  const typesTranslateX = scrollX.interpolate({
     inputRange,
-    outputRange: [0.2, 1, 0.2],
+    outputRange: [40, 0, -40],
   });
-  const backgroundTranslateY = scrollX.interpolate({
+  // Border color
+  const color = React.useMemo(() => {
+    const [r, g, b] = pokemon?.species?.colorPalette?.DarkVibrant?.rgb ||
+      pokemon?.species?.colorPalette?.Vibrant?.rgb ||
+      pokemon?.species?.colorPalette?.DarkMuted?.rgb || [0, 0, 0];
+    return `rgb(${Math.round(r)}, ${Math.round(g)}, ${Math.round(b)})`;
+  }, [pokemon]);
+  const pokeballScale = scrollX.interpolate({
     inputRange,
-    outputRange: [height / 2, 0, height / 2],
+    outputRange: [0.5, 1, 0.5],
   });
 
   return (
-    <View style={{ width, height: "100%" }}>
-      <Animated.View
-        style={[
-          StyleSheet.absoluteFill,
-          {
-            backgroundColor,
-            opacity: backgroundOpacity,
-            transform: [{ translateY: backgroundTranslateY }],
-          },
-        ]}
-      />
-      <View style={{ alignItems: "center" }}>
+    <View style={{ width }}>
+      <View
+        style={{
+          alignItems: "center",
+          backgroundColor: "rgba(230, 230, 230, 1)",
+          padding: spacing.base,
+        }}
+      >
+        <View
+          style={[
+            StyleSheet.absoluteFill,
+            { justifyContent: "center", alignItems: "center" },
+          ]}
+        >
+          <Animated.View
+            style={{
+              width: width / 2,
+              height: width / 2,
+              transform: [{ scale: pokeballScale }],
+            }}
+          >
+            <Pokeball fill={color} opacity={0.2} />
+          </Animated.View>
+        </View>
         <Animated.Image
           source={{ uri: `${IMG_BASE_URL}/${pokemon.id}.png` }}
           style={[
             styles.imageStyle,
             {
-              // opacity,
+              opacity,
               transform: [{ scale }],
             },
           ]}
         />
-        <Text>{pokemon.name}</Text>
+      </View>
+      <View style={{ padding: spacing.base, flex: 1 }}>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "flex-end",
+          }}
+        >
+          <Text style={{ color, fontSize: 36, fontWeight: "bold" }}>
+            {pokemon.name}
+          </Text>
+          <Animated.Text
+            style={{
+              color: colors.gray,
+              fontSize: fontSizes.lg,
+              fontWeight: "600",
+              opacity,
+            }}
+          >
+            #{pokemon.id}
+          </Animated.Text>
+        </View>
+        <Spacer height={spacing.sm} />
+        <Animated.View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            transform: [{ translateX: typesTranslateX }],
+          }}
+        >
+          <View style={{ flexDirection: "row" }}>
+            {pokemon.types.map((type) => (
+              <React.Fragment key={type.name}>
+                <TypeChip type={type} isTouchable={true} />
+                <Spacer width={spacing.base} />
+              </React.Fragment>
+            ))}
+          </View>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <MaterialCommunityIcons
+              name="scale"
+              color={colors.gray}
+              size={fontSizes.base}
+            />
+            <Spacer width={spacing.xs} />
+            <Text style={{ color: colors.gray, fontSize: fontSizes.sm }}>
+              {pokemon.weight} lbs
+            </Text>
+            <Spacer width={spacing.base} />
+            <MaterialCommunityIcons
+              name="ruler"
+              color={colors.gray}
+              size={fontSizes.base}
+            />
+            <Spacer width={spacing.xs} />
+            <Text style={{ color: colors.gray, fontSize: fontSizes.sm }}>
+              {pokemon.height}'
+            </Text>
+          </View>
+        </Animated.View>
+        <Spacer height={spacing.base} />
+        <View style={{ flex: 1 }}>
+          <View>
+            <Text style={{ fontSize: fontSizes.sm, color: colors.black }}>
+              {pokemon.species.flavor_text}
+            </Text>
+          </View>
+          <Spacer height={spacing.sm} />
+          <View style={{ flexGrow: 1 }}>
+            <Text>Stats</Text>
+          </View>
+          <View>
+            <Text>Evolutions...</Text>
+          </View>
+        </View>
       </View>
     </View>
   );

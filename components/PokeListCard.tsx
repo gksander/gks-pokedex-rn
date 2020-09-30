@@ -13,7 +13,7 @@ import { FetchPokeListDTO } from "../dto/FetchPokeList.dto";
 import { IMG_BASE_URL } from "../config";
 import { useNavigation } from "@react-navigation/native";
 import { ROUTES } from "../routes";
-import { colors, spacing } from "../appStyles";
+import { colors, fontSizes, spacing } from "../appStyles";
 import { TypeChip } from "./TypeChip";
 import { Spacer } from "./Spacer";
 import { Pokeball } from "./Pokeball";
@@ -124,11 +124,15 @@ export const PokeListCard: React.FC<PokeListCardProps> = ({ pokemon }) => {
         </View>
         <View>
           <Text
-            style={{ fontWeight: "bold", color: colors.black, fontSize: 16 }}
+            style={{
+              fontWeight: "bold",
+              color: colors.black,
+              fontSize: fontSizes.base,
+            }}
           >
             #{pokemon.id}
           </Text>
-          <Text style={{ fontSize: 24, color, fontWeight: "bold" }}>
+          <Text style={{ fontSize: fontSizes.lg, color, fontWeight: "bold" }}>
             {pokemon.name}
           </Text>
           <Spacer height={spacing.xs} />
