@@ -10,6 +10,7 @@ target 'GksPokedexRN' do
 
   # Custom pods
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+  pod 'RNFastImage', :path => '../node_modules/react-native-fast-image'
 
   target 'GksPokedexRNTests' do
     inherit! :complete
