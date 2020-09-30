@@ -78,6 +78,7 @@ export const PokeStatChart: React.FC<{ pokemon: PokemonFromPokeList }> = ({
             fontSize={8}
             fill={colors.black}
             textAnchor={i === 0 ? "end" : i === 3 ? "start" : "middle"}
+            key={i}
           >
             {truncateStatName(stat.name)}
           </SText>

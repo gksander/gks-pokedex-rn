@@ -23,6 +23,7 @@ import { TypeChip } from "../components/TypeChip";
 import { PokemonFromPokeList } from "../types";
 import { PokeStatChart } from "../components/PokeStatChart";
 import { useGetPokemonColor } from "../utils/useGetPokemonColor";
+import { PokeEvolutionChain } from "../components/PokeEvolutionChain";
 
 const { width, height } = Dimensions.get("window");
 
@@ -167,7 +168,6 @@ const PokeItem: React.FC<{
       <View
         style={{
           alignItems: "center",
-          backgroundColor: "rgba(230, 230, 230, 1)",
           padding: spacing.base,
         }}
       >
@@ -179,8 +179,8 @@ const PokeItem: React.FC<{
         >
           <Animated.View
             style={{
-              width: width / 2,
-              height: width / 2,
+              width: width / 1.9,
+              height: width / 1.9,
               transform: [{ scale: pokeballScale }],
             }}
           >
@@ -283,8 +283,10 @@ const PokeItem: React.FC<{
               <PokeStatChart pokemon={pokemon} />
             </Animated.View>
           </View>
-          <View style={{ height: 100, backgroundColor: "white" }}>
-            <Text>Evolutions...</Text>
+          <View style={{ height: 100, justifyContent: "center" }}>
+            {pokemon?.species?.evolution_chain?.links?.length > 1 && (
+              <PokeEvolutionChain pokemon={pokemon} />
+            )}
           </View>
         </View>
       </View>
