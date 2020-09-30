@@ -13,7 +13,7 @@ import { FetchPokeListDTO } from "../dto/FetchPokeList.dto";
 import { IMG_BASE_URL } from "../config";
 import { useNavigation } from "@react-navigation/native";
 import { ROUTES } from "../routes";
-import { colors, fontSizes, spacing } from "../appStyles";
+import { cardShadow, colors, fontSizes, spacing } from "../appStyles";
 import { TypeChip } from "./TypeChip";
 import { Spacer } from "./Spacer";
 import { Pokeball } from "./Pokeball";
@@ -87,14 +87,7 @@ export const PokeListCard: React.FC<PokeListCardProps> = ({ pokemon }) => {
           borderBottomWidth: 4,
           backgroundColor: "white",
           // Shadow
-          shadowColor: "#000",
-          shadowOffset: {
-            width: 0,
-            height: 4,
-          },
-          shadowOpacity: 0.32,
-          shadowRadius: 4,
-          elevation: 9,
+          ...cardShadow,
           paddingBottom: -IMAGE_SHIFT,
           opacity,
           transform: [{ scale }],

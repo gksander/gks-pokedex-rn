@@ -1,11 +1,28 @@
 import * as React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
+import {
+  ActivityIndicator,
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { DATA_BASE_URL } from "../config";
 import { useQuery } from "react-query";
 import { FetchTypeListDTO } from "../dto/FetchTypeList.dto";
 import { useNavigation } from "@react-navigation/native";
 import { ROUTES } from "../routes";
+import {
+  cardShadow,
+  colors,
+  fontSizes,
+  spacing,
+  TypeColors,
+} from "../appStyles";
+import { Spacer } from "../components/Spacer";
+import { FlatGrid } from "react-native-super-grid";
+import { TypeChip } from "../components/TypeChip";
 
 /**
  * Fetch type list
@@ -27,7 +44,10 @@ export const TypeListView: React.FC = () => {
     },
   );
   const typeList = React.useMemo(
-    () => (data?.data?.allType?.edges || []).map((edge) => edge.node),
+    () =>
+      (data?.data?.allType?.edges || [])
+        .map((edge) => edge.node)
+        .filter((type) => !["Unknown", "Shadow"].includes(type.name)),
     [data],
   );
 
@@ -37,16 +57,18 @@ export const TypeListView: React.FC = () => {
 
   return (
     <SafeAreaView>
-      {typeList.map((type) => (
-        <TouchableOpacity
-          key={type.name}
-          onPress={() =>
-            navigation.navigate(ROUTES.TYPE_DETAIL, { slug: type.slug })
-          }
-        >
-          <Text>{type.name}</Text>
-        </TouchableOpacity>
-      ))}
+      <FlatGrid
+        data={typeList}
+        renderItem={({ item }) => (
+          <TypeChip
+            type={item}
+            isTouchable={true}
+            style={{ width: "100%", ...cardShadow, padding: spacing.base }}
+            textStyle={{ fontWeight: "bold", fontSize: fontSizes.base }}
+          />
+        )}
+        contentContainerStyle={{ height: "100%" }}
+      />
     </SafeAreaView>
   );
 };

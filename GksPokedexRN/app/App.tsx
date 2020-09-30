@@ -52,7 +52,7 @@ const TabView: React.FC = () => {
           const iconName =
             {
               [ROUTES.POKE_LIST]: "pokeball",
-              // [ROUTES.TYPE_LIST]: "account-badge-alert",
+              [ROUTES.TYPE_LIST]: "diamond-stone",
               [ROUTES.POKE_SEARCH]: "cloud-search",
             }[route.name] || "pokeball";
           return (

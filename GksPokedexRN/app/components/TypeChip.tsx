@@ -1,5 +1,11 @@
 import * as React from "react";
-import { Text, TouchableOpacity, ViewStyle, Animated } from "react-native";
+import {
+  Text,
+  TouchableOpacity,
+  ViewStyle,
+  Animated,
+  TextStyle,
+} from "react-native";
 import { FetchPokeListDTO } from "../dto/FetchPokeList.dto";
 import { colors, spacing, TypeColors } from "../appStyles";
 import { useNavigation } from "@react-navigation/native";
@@ -9,6 +15,7 @@ type TypeChipProps = {
   type: FetchPokeListDTO["data"]["allPokemon"]["edges"][0]["node"]["types"][0];
   isTouchable?: boolean;
   style?: ViewStyle;
+  textStyle?: TextStyle;
 };
 
 const AnimatedTouchableOpacity = Animated.createAnimatedComponent(
@@ -19,15 +26,19 @@ export const TypeChip: React.FC<TypeChipProps> = ({
   type,
   isTouchable = false,
   style = {},
+  textStyle = {},
 }) => {
   const navigation = useNavigation();
 
   const text = (
     <Text
-      style={{
-        color: TypeColors[type.name]?.font || colors.black,
-        fontWeight: "600",
-      }}
+      style={[
+        {
+          color: TypeColors[type.name]?.font || colors.black,
+          fontWeight: "600",
+        },
+        textStyle,
+      ]}
     >
       {type.name}
     </Text>
@@ -35,7 +46,7 @@ export const TypeChip: React.FC<TypeChipProps> = ({
 
   const baseStyle: ViewStyle = {
     backgroundColor: TypeColors[type.name]?.bg || "lightblue",
-    paddingVertical: spacing.xs,
+    padding: spacing.xs,
     width: 75,
     alignItems: "center",
     borderRadius: 3,

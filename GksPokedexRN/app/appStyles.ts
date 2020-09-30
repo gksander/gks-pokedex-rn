@@ -1,3 +1,5 @@
+import { ViewStyle } from "react-native";
+
 export const spacing = {
   xs: 5,
   sm: 8,
@@ -40,4 +42,15 @@ export const TypeColors: { [key: string]: { font: string; bg: string } } = {
   Rock: { font: colors.white, bg: "#B8A038" },
   Steel: { font: colors.white, bg: "#787887" },
   Water: { font: colors.white, bg: "#6890F0" },
+};
+
+export const cardShadow: Partial<ViewStyle> = {
+  shadowColor: "#000",
+  shadowOffset: {
+    width: 0,
+    height: 4,
+  },
+  shadowOpacity: 0.32,
+  shadowRadius: 4,
+  elevation: 9,
 };
