@@ -17,6 +17,7 @@ import { colors, fontSizes, spacing } from "../appStyles";
 import { TypeChip } from "./TypeChip";
 import { Spacer } from "./Spacer";
 import { Pokeball } from "./Pokeball";
+import { useGetPokemonColor } from "../utils/useGetPokemonColor";
 
 const IMAGE_SHIFT = 30;
 
@@ -32,12 +33,7 @@ export const PokeListCard: React.FC<PokeListCardProps> = ({ pokemon }) => {
   const navigation = useNavigation();
 
   // Border color
-  const color = React.useMemo(() => {
-    const [r, g, b] = pokemon?.species?.colorPalette?.DarkVibrant?.rgb ||
-      pokemon?.species?.colorPalette?.Vibrant?.rgb ||
-      pokemon?.species?.colorPalette?.DarkMuted?.rgb || [0, 0, 0];
-    return `rgb(${Math.round(r)}, ${Math.round(g)}, ${Math.round(b)})`;
-  }, [pokemon]);
+  const color = useGetPokemonColor(pokemon);
 
   // Local state
   const animValue = React.useRef(new Animated.Value(0)).current;

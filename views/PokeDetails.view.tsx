@@ -20,6 +20,9 @@ import { colors, fontSizes, spacing } from "../appStyles";
 import { Spacer } from "../components/Spacer";
 import { Pokeball } from "../components/Pokeball";
 import { TypeChip } from "../components/TypeChip";
+import { PokemonFromPokeList } from "../types";
+import { PokeStatChart } from "../components/PokeStatChart";
+import { useGetPokemonColor } from "../utils/useGetPokemonColor";
 
 const { width, height } = Dimensions.get("window");
 
@@ -55,7 +58,7 @@ export const PokeDetailsView: React.FC = () => {
   if (status === "loading") return <ActivityIndicator />;
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: "white" }}>
       {/* Header */}
       <SafeAreaView style={{ backgroundColor: "transparent" }}>
         <View style={{ padding: spacing.base, backgroundColor: "transparent" }}>
@@ -98,7 +101,7 @@ export const PokeDetailsView: React.FC = () => {
  * Item in the main carousel
  */
 const PokeItem: React.FC<{
-  pokemon: FetchPokeListDTO["data"]["allPokemon"]["edges"][0]["node"];
+  pokemon: PokemonFromPokeList;
   scrollX: Animated.Value;
   itemIndex: number;
 }> = ({ pokemon, scrollX, itemIndex }) => {
@@ -126,13 +129,12 @@ const PokeItem: React.FC<{
     outputRange: [40, 0, -40],
   });
   // Border color
-  const color = React.useMemo(() => {
-    const [r, g, b] = pokemon?.species?.colorPalette?.DarkVibrant?.rgb ||
-      pokemon?.species?.colorPalette?.Vibrant?.rgb ||
-      pokemon?.species?.colorPalette?.DarkMuted?.rgb || [0, 0, 0];
-    return `rgb(${Math.round(r)}, ${Math.round(g)}, ${Math.round(b)})`;
-  }, [pokemon]);
+  const color = useGetPokemonColor(pokemon);
   const pokeballScale = scrollX.interpolate({
+    inputRange,
+    outputRange: [0.5, 1, 0.5],
+  });
+  const statChartScale = scrollX.interpolate({
     inputRange,
     outputRange: [0.5, 1, 0.5],
   });
@@ -236,15 +238,29 @@ const PokeItem: React.FC<{
         <Spacer height={spacing.base} />
         <View style={{ flex: 1 }}>
           <View>
-            <Text style={{ fontSize: fontSizes.sm, color: colors.black }}>
+            <Text style={{ fontSize: fontSizes.sm, color: colors.gray }}>
               {pokemon.species.flavor_text}
             </Text>
           </View>
           <Spacer height={spacing.sm} />
-          <View style={{ flexGrow: 1 }}>
-            <Text>Stats</Text>
+          <View
+            style={{
+              flexGrow: 1,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Animated.View
+              style={{
+                width: width / 2,
+                height: width / 2,
+                transform: [{ scale: statChartScale }],
+              }}
+            >
+              <PokeStatChart pokemon={pokemon} />
+            </Animated.View>
           </View>
-          <View>
+          <View style={{ height: 100, backgroundColor: "white" }}>
             <Text>Evolutions...</Text>
           </View>
         </View>
