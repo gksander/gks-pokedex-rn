@@ -1,72 +1,46 @@
 import * as React from "react";
-import {
-  Text,
-  TouchableOpacity,
-  ViewStyle,
-  Animated,
-  TextStyle,
-} from "react-native";
+import { Text, ViewStyle, TextStyle, View } from "react-native";
 import { FetchPokeListDTO } from "../dto/FetchPokeList.dto";
 import { colors, spacing, TypeColors } from "../appStyles";
-import { useNavigation } from "@react-navigation/native";
-import { ROUTES } from "../routes";
 
 type TypeChipProps = {
   type: FetchPokeListDTO["data"]["allPokemon"]["edges"][0]["node"]["types"][0];
-  isTouchable?: boolean;
   style?: ViewStyle;
   textStyle?: TextStyle;
 };
 
-const AnimatedTouchableOpacity = Animated.createAnimatedComponent(
-  TouchableOpacity,
-);
-
+/**
+ * Type Chip for displaying a type
+ */
 export const TypeChip: React.FC<TypeChipProps> = ({
   type,
-  isTouchable = false,
   style = {},
   textStyle = {},
 }) => {
-  const navigation = useNavigation();
-
-  const text = (
-    <Text
+  return (
+    <View
       style={[
         {
-          color: TypeColors[type.name]?.font || colors.black,
-          fontWeight: "600",
+          backgroundColor: TypeColors[type.name]?.bg || "lightblue",
+          padding: spacing.xs,
+          width: 75,
+          alignItems: "center",
+          borderRadius: 3,
         },
-        textStyle,
+        style,
       ]}
     >
-      {type.name}
-    </Text>
-  );
-
-  const baseStyle: ViewStyle = {
-    backgroundColor: TypeColors[type.name]?.bg || "lightblue",
-    padding: spacing.xs,
-    width: 75,
-    alignItems: "center",
-    borderRadius: 3,
-  };
-
-  if (isTouchable) {
-    return (
-      <AnimatedTouchableOpacity
-        style={[baseStyle, style]}
-        onPress={() =>
-          navigation.navigate(ROUTES.TYPE_DETAIL, {
-            slug: type.slug,
-            name: type.name,
-          })
-        }
+      <Text
+        style={[
+          {
+            color: TypeColors[type.name]?.font || colors.black,
+            fontWeight: "600",
+          },
+          textStyle,
+        ]}
       >
-        {text}
-      </AnimatedTouchableOpacity>
-    );
-  }
-
-  return <Animated.View style={[baseStyle, style]}>{text}</Animated.View>;
+        {type.name}
+      </Text>
+    </View>
+  );
 };

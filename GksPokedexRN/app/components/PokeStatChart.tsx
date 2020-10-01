@@ -30,6 +30,9 @@ const outerPath = [
   `Z`,
 ].join(",");
 
+/**
+ * Stat chart SVG
+ */
 export const PokeStatChart: React.FC<{ pokemon: PokemonFromPokeList }> = ({
   pokemon,
 }) => {

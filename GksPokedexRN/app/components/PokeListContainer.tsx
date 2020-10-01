@@ -16,8 +16,6 @@ export const PokeListContext = React.createContext<
 
 /**
  * Fetching pokemont list
- * @param _key
- * @param page
  */
 const fetchPokeList = (_key: string, page = 1) =>
   fetch(
@@ -25,7 +23,7 @@ const fetchPokeList = (_key: string, page = 1) =>
   ).then((res) => res.json());
 
 /**
- * Create actual container
+ * Create actual container for fetching pokemon and providing data/utilities
  */
 export const PokeListContainer: React.FC = ({ children }) => {
   const { data, ...meta } = useInfiniteQuery<FetchPokeListDTO>(

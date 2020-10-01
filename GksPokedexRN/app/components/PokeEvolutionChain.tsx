@@ -19,6 +19,10 @@ import FastImage from "react-native-fast-image";
 const IMAGE_SIZE = 75;
 const AnimatedFastImage = Animated.createAnimatedComponent(FastImage);
 
+/**
+ * Evolution chain
+ * - Sort of complicated. Involves aggregating evolution chain into "buckets"
+ */
 export const PokeEvolutionChain: React.FC<{ pokemon: PokemonFromPokeList }> = ({
   pokemon,
 }) => {

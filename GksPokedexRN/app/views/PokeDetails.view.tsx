@@ -198,7 +198,7 @@ const PokeItem: React.FC<{
           <View style={{ flexDirection: "row" }}>
             {pokemon.types.map((type) => (
               <React.Fragment key={type.name}>
-                <TypeChip type={type} isTouchable={true} />
+                <TypeChip type={type} />
                 <Spacer width={spacing.base} />
               </React.Fragment>
             ))}

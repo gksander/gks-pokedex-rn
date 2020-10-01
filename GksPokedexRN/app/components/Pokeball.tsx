@@ -1,6 +1,9 @@
 import * as React from "react";
 import Svg, { Circle, Path } from "react-native-svg";
 
+/**
+ * Colored pokeball for a spritz of design
+ */
 export const Pokeball: React.FC<{ fill?: string; opacity?: number }> = ({
   fill = "#F3F3F3",
   opacity = 0.5,
