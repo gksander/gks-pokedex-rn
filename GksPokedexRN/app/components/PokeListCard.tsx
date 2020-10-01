@@ -19,11 +19,12 @@ import { Spacer } from "./Spacer";
 import { Pokeball } from "./Pokeball";
 import { useGetPokemonColor } from "../utils/useGetPokemonColor";
 import FastImage from "react-native-fast-image";
+import { PokemonFromPokeList } from "../types";
 
 const IMAGE_SHIFT = 30;
 
 type PokeListCardProps = {
-  pokemon: FetchPokeListDTO["data"]["allPokemon"]["edges"][0]["node"];
+  pokemon: PokemonFromPokeList;
 };
 const AnimatedFastImage = Animated.createAnimatedComponent(FastImage);
 
