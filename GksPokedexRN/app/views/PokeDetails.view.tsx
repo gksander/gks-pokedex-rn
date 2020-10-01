@@ -4,7 +4,6 @@ import {
   Animated,
   Dimensions,
   FlatList,
-  SafeAreaView,
   StyleSheet,
   Text,
   View,
@@ -13,7 +12,6 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { PokeListContext } from "../components/PokeListContainer";
 import { IMG_BASE_URL } from "../config";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import { colors, fontSizes, spacing } from "../appStyles";
 import { Spacer } from "../components/Spacer";
 import { Pokeball } from "../components/Pokeball";
@@ -24,7 +22,7 @@ import { useGetPokemonColor } from "../utils/useGetPokemonColor";
 import { PokeEvolutionChain } from "../components/PokeEvolutionChain";
 import FastImage from "react-native-fast-image";
 
-const { width, height } = Dimensions.get("window");
+const { width } = Dimensions.get("window");
 const AnimatedFastImage = Animated.createAnimatedComponent(FastImage);
 
 /**
@@ -60,38 +58,6 @@ export const PokeDetailsView: React.FC = () => {
 
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
-      {/* Header */}
-      <SafeAreaView style={{ backgroundColor: "transparent" }}>
-        <View style={{ padding: spacing.base, backgroundColor: "transparent" }}>
-          <TouchableOpacity
-            onPress={() => navigation.goBack()}
-            style={{ flexDirection: "row", alignItems: "center" }}
-            hitSlop={{
-              left: spacing.base,
-              right: spacing.base,
-              top: spacing.base,
-              bottom: spacing.base,
-            }}
-          >
-            <MaterialCommunityIcons
-              name="backburger"
-              size={1.2 * fontSizes.base}
-              color={colors.black}
-            />
-            <Spacer width={spacing.sm} />
-            <Text
-              style={{
-                fontSize: fontSizes.base,
-                color: colors.black,
-                fontWeight: "600",
-              }}
-            >
-              Go Back
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </SafeAreaView>
-
       <Animated.FlatList
         ref={flatlistRef}
         data={list}

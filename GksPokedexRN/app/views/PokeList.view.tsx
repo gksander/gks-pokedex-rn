@@ -42,6 +42,13 @@ export const PokeListView: React.FC = () => {
         ItemSeparatorComponent={() => (
           <View style={{ height: 2 * spacing.base }} />
         )}
+        ListFooterComponent={
+          isFetchingMore ? (
+            <View style={{ padding: spacing.base }}>
+              <ActivityIndicator />
+            </View>
+          ) : null
+        }
       />
     </SafeAreaView>
   );

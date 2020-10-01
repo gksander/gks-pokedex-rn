@@ -23,6 +23,7 @@ import {
 import { Spacer } from "../components/Spacer";
 import { FlatGrid } from "react-native-super-grid";
 import { TypeChip } from "../components/TypeChip";
+import { AppText } from "../components/AppText";
 
 /**
  * Fetch type list
@@ -56,7 +57,18 @@ export const TypeListView: React.FC = () => {
   if (isError) return <Text>Something went wrong</Text>;
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ backgroundColor: "white" }}>
+      <View style={{ padding: spacing.base }}>
+        <AppText
+          style={{
+            fontSize: fontSizes.lg,
+            fontWeight: "bold",
+          }}
+        >
+          Type List
+        </AppText>
+        <AppText>Tap on a type to view more details.</AppText>
+      </View>
       <FlatGrid
         data={typeList}
         renderItem={({ item }) => (

@@ -57,7 +57,10 @@ export const TypeChip: React.FC<TypeChipProps> = ({
       <AnimatedTouchableOpacity
         style={[baseStyle, style]}
         onPress={() =>
-          navigation.navigate(ROUTES.TYPE_DETAIL, { slug: type.slug })
+          navigation.navigate(ROUTES.TYPE_DETAIL, {
+            slug: type.slug,
+            name: type.name,
+          })
         }
       >
         {text}
